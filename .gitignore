@@ -1,0 +1,9 @@
+# Ansible
+ansible/blog-app/**/.env
+.ansible/
+
+# Terraform
+terraform/.terraform/
+terraform/terraform.tfstate*
+terraform/.terraform.lock.hcl
+

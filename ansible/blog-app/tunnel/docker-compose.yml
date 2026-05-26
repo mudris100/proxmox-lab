@@ -1,0 +1,18 @@
+---
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    env_file:
+      - .env
+    command: tunnel run --token ${TUNNEL_TOKEN}
+    restart: always
+    networks:
+      - tunnel_net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  tunnel_net:
+    name: tunnel_net
+    driver: bridge

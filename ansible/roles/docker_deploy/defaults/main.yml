@@ -1,0 +1,3 @@
+docker_deploy_src: "" # local source folder (trailing slash = copy contents)
+docker_deploy_dest: "" # remote destination path
+docker_deploy_state: present

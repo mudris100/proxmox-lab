@@ -1,0 +1,22 @@
+- name: Ensure target directory exists
+  ansible.builtin.file:
+    path: "{{ docker_deploy_dest }}"
+    state: directory
+    mode: "0755"
+
+- name: Render .env from vault
+  ansible.builtin.template:
+    src: "{{ docker_deploy_src }}.env.j2"
+    dest: "{{ docker_deploy_dest }}/.env"
+    mode: "0600"
+
+- name: Copy app files
+  ansible.builtin.copy:
+    src: "{{ docker_deploy_src }}" # trailing slash copies contents, not the folder itself
+    dest: "{{ docker_deploy_dest }}/"
+    mode: preserve
+
+- name: Start docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_deploy_dest }}"
+    state: "{{ docker_deploy_state }}"

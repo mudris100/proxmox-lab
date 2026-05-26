@@ -1,0 +1,16 @@
+---
+# defaults file for docker role
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+docker_users:
+  - "{{ ansible_user }}"
+
+docker_apt_release_channel: stable
+docker_apt_arch: amd64
+docker_apt_repository: "deb [arch={{ docker_apt_arch }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+docker_gpg_url: https://download.docker.com/linux/ubuntu/gpg

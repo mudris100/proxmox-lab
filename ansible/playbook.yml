@@ -1,0 +1,27 @@
+- name: Wait for server to become ready
+  hosts: server_01
+  gather_facts: false
+  tasks:
+    - name: Wait for SSH to become available
+      ansible.builtin.wait_for_connection:
+        timeout: 120
+
+    - name: Gather facts
+      ansible.builtin.setup:
+
+- name: Deploy blog applications
+  hosts: server_01
+  become: true
+  roles:
+    - role: docker
+    - role: docker_deploy
+      vars:
+        docker_deploy_app_name: tunnel
+        docker_deploy_src: blog-app/tunnel/
+        docker_deploy_dest: /opt/blog-app/tunnel
+
+    - role: docker_deploy
+      vars:
+        docker_deploy_app_name: blog
+        docker_deploy_src: blog-app/blog/
+        docker_deploy_dest: /opt/blog-app/blog
